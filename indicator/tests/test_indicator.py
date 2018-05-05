@@ -91,15 +91,15 @@ def test_ATR(df, test_period=7):
     df.reset_index(inplace=True)
     for i in range(0, len(df)):
         if (i < ignore):
-            df.set_value(i, colTest, 0.00)
+            df.at[i, colTest] = 0.00
         elif (i < ignore + test_period - 1):
-            periodTotal += df.get_value(i, colFrom)
-            df.set_value(i, colTest, 0.00)
+            periodTotal += df.at[i, colFrom]
+            df.at[i, colTest] = 0.00
         elif (i < ignore + test_period):
-            periodTotal += df.get_value(i, colFrom)
-            df.set_value(i, colTest, (periodTotal / test_period))
+            periodTotal += df.at[i, colFrom]
+            df.at[i, colTest] = (periodTotal / test_period)
         else:
-            df.set_value(i, colTest, (((df.get_value(i - 1, colTest) * (test_period - 1)) + df.get_value(i, colFrom)) / test_period))
+            df.at[i, colTest] = (((df.at[i - 1, colTest] * (test_period - 1)) + df.at[i, colFrom]) / test_period)
     df.set_index('Date', inplace=True)
     end = time.time()
     print('Time taken by manual computations for ATR {}'.format(end-start))
@@ -146,15 +146,15 @@ def test_MACD(df):
     coef = 2 / (test_period + 1)
     for i in range(0, len(df)):
         if (i < ignore):
-            df.set_value(i, colTest, 0.00)
+            df.at[i, colTest] = 0.00
         elif (i < ignore + test_period - 1):
-            periodTotal += df.get_value(i, colFrom)
-            df.set_value(i, colTest, 0.00)
+            periodTotal += df.at[i, colFrom]
+            df.at[i, colTest] = 0.00
         elif (i < ignore + test_period):
-            periodTotal += df.get_value(i, colFrom)
-            df.set_value(i, colTest, (periodTotal / test_period))
+            periodTotal += df.at[i, colFrom]
+            df.at[i, colTest] = (periodTotal / test_period)
         else:
-            df.set_value(i, colTest, (((df.get_value(i, colFrom) - df.get_value(i - 1, colTest)) * coef) + df.get_value(i - 1, colTest)))
+            df.at[i, colTest] = (((df.at[i, colFrom] - df.at[i - 1, colTest]) * coef) + df.at[i - 1, colTest])
 
     # Compute slow EMA
     #EMA(df, base, sE, slowEMA)
@@ -165,15 +165,15 @@ def test_MACD(df):
     coef = 2 / (test_period + 1)
     for i in range(0, len(df)):
         if (i < ignore):
-            df.set_value(i, colTest, 0.00)
+            df.at[i, colTest] = 0.00
         elif (i < ignore + test_period - 1):
-            periodTotal += df.get_value(i, colFrom)
-            df.set_value(i, colTest, 0.00)
+            periodTotal += df.at[i, colFrom]
+            df.at[i, colTest] = 0.00
         elif (i < ignore + test_period):
-            periodTotal += df.get_value(i, colFrom)
-            df.set_value(i, colTest, (periodTotal / test_period))
+            periodTotal += df.at[i, colFrom]
+            df.at[i, colTest] = (periodTotal / test_period)
         else:
-            df.set_value(i, colTest, (((df.get_value(i, colFrom) - df.get_value(i - 1, colTest)) * coef) + df.get_value(i - 1, colTest)))
+            df.at[i, colTest] = (((df.at[i, colFrom] - df.at[i - 1, colTest]) * coef) + df.at[i - 1, colTest])
 
     # Compute MACD
     df[macd_test] = np.where(np.logical_and(np.logical_not(df[fE_test] == 0), np.logical_not(df[sE_test] == 0)), df[fE_test] - df[sE_test], 0)
@@ -188,15 +188,15 @@ def test_MACD(df):
     coef = 2 / (test_period + 1)
     for i in range(0, len(df)):
         if (i < ignore):
-            df.set_value(i, colTest, 0.00)
+            df.at[i, colTest] = 0.00
         elif (i < ignore + test_period - 1):
-            periodTotal += df.get_value(i, colFrom)
-            df.set_value(i, colTest, 0.00)
+            periodTotal += df.at[i, colFrom]
+            df.at[i, colTest] = 0.00
         elif (i < ignore + test_period):
-            periodTotal += df.get_value(i, colFrom)
-            df.set_value(i, colTest, (periodTotal / test_period))
+            periodTotal += df.at[i, colFrom]
+            df.at[i, colTest] = (periodTotal / test_period)
         else:
-            df.set_value(i, colTest, (((df.get_value(i, colFrom) - df.get_value(i - 1, colTest)) * coef) + df.get_value(i - 1, colTest)))
+            df.at[i, colTest] = (((df.at[i, colFrom] - df.at[i - 1, colTest]) * coef) + df.at[i - 1, colTest])
 
     # Compute MACD Histogram
     df[hist_test] = np.where(np.logical_and(np.logical_not(df[macd_test] == 0), np.logical_not(df[sig_test] == 0)), df[macd_test] - df[sig_test], 0)
