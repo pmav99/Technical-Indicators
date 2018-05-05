@@ -44,18 +44,18 @@ def test_EMA(df, colFrom='Close', test_period=5, ignore=0, forATR=False):
     df.reset_index(inplace=True)
     for i in range(0, len(df)):
         if (i < ignore):
-            df.set_value(i, colTest, 0.00)
+            df.at[i, colTest] = 0
         elif (i < ignore + test_period - 1):
-            periodTotal += df.get_value(i, colFrom)
-            df.set_value(i, colTest, 0.00)
+            periodTotal += df.at[i, colFrom]
+            df.at[i, colTest] = 0
         elif (i < ignore + test_period):
-            periodTotal += df.get_value(i, colFrom)
-            df.set_value(i, colTest, (periodTotal / test_period))
+            periodTotal += df.at[i, colFrom]
+            df.at[i, colTest] = (periodTotal / test_period)
         else:
             if (forATR == True):
-                df.set_value(i, colTest, (((df.get_value(i - 1, colTest) * (test_period - 1)) + df.get_value(i, colFrom)) / test_period))
+                df.at[i, colTest] = (((df.at[i - 1, colTest] * (test_period - 1)) + df.at[i, colFrom]) / test_period)
             else:
-                df.set_value(i, colTest, (((df.get_value(i, colFrom) - df.get_value(i - 1, colTest)) * coef) + df.get_value(i - 1, colTest)))
+                df.at[i, colTest] = (((df.at[i, colFrom] - df.at[i - 1, colTest]) * coef) + df.at[i - 1, colTest])
 
     df.set_index('Date', inplace=True)
     end = time.time()
