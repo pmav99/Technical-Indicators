@@ -14,7 +14,7 @@ import quandl
 import time
 import numpy as np
 
-from indicator.indicators import EMA, ATR, SuperTrend, MACD, HA, BBand, RSI, Ichimoku
+from .. import EMA, ATR, SuperTrend, MACD, HA, BBand, RSI, Ichimoku
 
 class Test(unittest.TestCase):
 
