@@ -35,7 +35,7 @@ def test_EMA(df, colFrom='Close', test_period=5, ignore=0, forATR=False):
     start = time.time()
     EMA(df, colFrom, colTo, test_period, alpha=forATR)
     end = time.time()
-    print('Time taken by Pandas computations for EMA {}'.format(end-start))
+    print('Time taken by Pandas computations for EMA {}'.format(end - start))
 
     start = time.time()
     coef = 2 / (test_period + 1)
