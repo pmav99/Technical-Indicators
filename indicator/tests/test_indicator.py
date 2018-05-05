@@ -21,8 +21,9 @@ from .. import EMA, ATR, SuperTrend, MACD, HA, BBand, RSI, Ichimoku
 
 @pytest.fixture
 def df():
-    df = quandl.get("NSE/NIFTY_50", api_key='E8LGujxYzNsiUWYDPbGF', start_date='1997-01-01')
-    df.drop(['Shares Traded', 'Turnover (Rs. Cr)'], inplace=True, axis=1)
+    # df = quandl.get("NSE/NIFTY_50", api_key='E8LGujxYzNsiUWYDPbGF', start_date='1997-01-01')
+    # df.drop(['Shares Traded', 'Turnover (Rs. Cr)'], inplace=True, axis=1)
+    df = pd.read_parquet('./indicator/tests/fixtures/nse.prq')
     return df
 
 
